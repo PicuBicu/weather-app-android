@@ -1,20 +1,13 @@
 package pl.piotrb.weatherapp;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 
-import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
-
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements ConfigurationFragment.ConfigurationFragmentListener {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
-    private Button testButton;
-    private WeatherDataViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +15,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, WeatherDataFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
+                    .add(R.id.first_fragment, AdditionalDataFragment.class, null)
+                    .add(R.id.first_fragment, ConfigurationFragment.class, null)
                     .commit();
-            testButton = findViewById(R.id.testButton);
-            viewModel = new ViewModelProvider(this).get(WeatherDataViewModel.class);
-            testButton.setOnClickListener((cos) -> {
-                viewModel.setCityName("Radomsko");
-            });
         }
     }
 
-
+    // Możliwość wywołania metody z activity poprzez fragment
+    @Override
+    public void onChange() {
+        fragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.first_fragment, WeatherDataFragment.class,null)
+        .commit();
+    }
 }
