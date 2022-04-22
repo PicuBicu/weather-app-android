@@ -3,156 +3,69 @@ package pl.piotrb.weatherapp.model;
 public class Main {
 
     private Double temp;
+    private Double feelsLike;
     private Double tempMin;
     private Double tempMax;
-    private Double pressure;
-    private Double seaLevel;
-    private Double grndLevel;
+    private Integer pressure;
     private Integer humidity;
-    private Integer tempKf;
 
-    /**
-     *
-     * @return
-     * The temp
-     */
     public Double getTemp() {
         return temp;
     }
 
-    /**
-     *
-     * @param temp
-     * The temp
-     */
     public void setTemp(Double temp) {
         this.temp = temp;
     }
 
-    /**
-     *
-     * @return
-     * The tempMin
-     */
+    public Double getFeelsLike() {
+        return feelsLike;
+    }
+
+    public void setFeelsLike(Double feelsLike) {
+        this.feelsLike = feelsLike;
+    }
+
     public Double getTempMin() {
         return tempMin;
     }
 
-    /**
-     *
-     * @param tempMin
-     * The temp_min
-     */
     public void setTempMin(Double tempMin) {
         this.tempMin = tempMin;
     }
 
-    /**
-     *
-     * @return
-     * The tempMax
-     */
     public Double getTempMax() {
         return tempMax;
     }
 
-    /**
-     *
-     * @param tempMax
-     * The temp_max
-     */
     public void setTempMax(Double tempMax) {
         this.tempMax = tempMax;
     }
 
-    /**
-     *
-     * @return
-     * The pressure
-     */
-    public Double getPressure() {
+    public Integer getPressure() {
         return pressure;
     }
 
-    /**
-     *
-     * @param pressure
-     * The pressure
-     */
-    public void setPressure(Double pressure) {
+    public void setPressure(Integer pressure) {
         this.pressure = pressure;
     }
 
-    /**
-     *
-     * @return
-     * The seaLevel
-     */
-    public Double getSeaLevel() {
-        return seaLevel;
-    }
-
-    /**
-     *
-     * @param seaLevel
-     * The sea_level
-     */
-    public void setSeaLevel(Double seaLevel) {
-        this.seaLevel = seaLevel;
-    }
-
-    /**
-     *
-     * @return
-     * The grndLevel
-     */
-    public Double getGrndLevel() {
-        return grndLevel;
-    }
-
-    /**
-     *
-     * @param grndLevel
-     * The grnd_level
-     */
-    public void setGrndLevel(Double grndLevel) {
-        this.grndLevel = grndLevel;
-    }
-
-    /**
-     *
-     * @return
-     * The humidity
-     */
     public Integer getHumidity() {
         return humidity;
     }
 
-    /**
-     *
-     * @param humidity
-     * The humidity
-     */
     public void setHumidity(Integer humidity) {
         this.humidity = humidity;
     }
 
-    /**
-     *
-     * @return
-     * The tempKf
-     */
-    public Integer getTempKf() {
-        return tempKf;
+    @Override
+    public String toString() {
+        return "Main{" +
+                "temp=" + temp +
+                ", feelsLike=" + feelsLike +
+                ", tempMin=" + tempMin +
+                ", tempMax=" + tempMax +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                '}';
     }
-
-    /**
-     *
-     * @param tempKf
-     * The temp_kf
-     */
-    public void setTempKf(Integer tempKf) {
-        this.tempKf = tempKf;
-    }
-
 }
