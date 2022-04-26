@@ -1,4 +1,4 @@
-package pl.piotrb.weatherapp;
+package pl.piotrb.weatherapp.fragment;
 
 import android.os.Bundle;
 
@@ -8,24 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pl.piotrb.weatherapp.R;
+
 public class AdditionalDataFragment extends Fragment {
-
-
-    public AdditionalDataFragment() {
-    }
-
-    public static AdditionalDataFragment newInstance(String param1, String param2) {
-        AdditionalDataFragment fragment = new AdditionalDataFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package pl.piotrb.weatherapp.model;
+package pl.piotrb.weatherapp.model.currentweatherdata;
 
 public class Clouds {
 

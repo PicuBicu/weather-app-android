@@ -1,4 +1,4 @@
-package pl.piotrb.weatherapp.model;
+package pl.piotrb.weatherapp.model.currentweatherdata;
 
 import java.util.List;
 
