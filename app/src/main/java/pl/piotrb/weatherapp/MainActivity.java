@@ -5,14 +5,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import pl.piotrb.weatherapp.fragment.AdditionalDataFragment;
 import pl.piotrb.weatherapp.fragment.ConfigurationFragment;
 import pl.piotrb.weatherapp.fragment.WeatherDataFragment;
 import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
 import pl.piotrb.weatherapp.repository.WeatherDataRepository;
+import pl.piotrb.weatherapp.style.ZoomOutPageTransformer;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
 public class MainActivity extends AppCompatActivity implements ConfigurationFragment.ConfigurationFragmentListener {
@@ -20,16 +25,38 @@ public class MainActivity extends AppCompatActivity implements ConfigurationFrag
     private final WeatherDataRepository repository = WeatherDataRepository.getInstance();
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private WeatherDataViewModel viewModel;
+    private static final int NUM_PAGES = 7;
+    private ViewPager2 viewPager;
+    private FragmentStateAdapter pagerAdapter;
+
+
+    @Override
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() == 0) {
+            super.onBackPressed();
+        } else {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (savedInstanceState == null) {
+
             viewModel = new ViewModelProvider(this)
                     .get(WeatherDataViewModel.class);
+
+            viewPager = findViewById(R.id.pager);
+            viewPager.setPageTransformer(new ZoomOutPageTransformer());
+            pagerAdapter = new ScreenSlidePageAdapter(this, NUM_PAGES);
+            viewPager.setAdapter(pagerAdapter);
+
             onDailyWeatherDataError();
             onDailyWeatherData();
+
             fragmentManager.beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
