@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class WeatherData {
+public class WeeklyForecast {
     private Double lat;
     private Double lon;
     private String timezone;
@@ -20,6 +20,6 @@ public class WeatherData {
     private Current current;
     private Weather weather;
     private Rain rain;
-    @SerializedName("daily_forecast")
+    @SerializedName("daily")
     private List<Daily> dailyForecast;
 }
