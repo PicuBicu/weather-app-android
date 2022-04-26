@@ -1,21 +1,12 @@
 package pl.piotrb.weatherapp.model.currentweatherdata;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+@Getter
+@Setter
 public class Clouds {
-
     private Integer all;
-
-    public Integer getAll() {
-        return all;
-    }
-
-    public void setAll(Integer all) {
-        this.all = all;
-    }
-
-    @Override
-    public String toString() {
-        return "Clouds{" +
-                "all=" + all +
-                '}';
-    }
 }
