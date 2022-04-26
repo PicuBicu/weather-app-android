@@ -26,7 +26,7 @@ public class Current {
     private Integer clouds;
     private Integer visibility;
     @SerializedName("wind_speed")
-    private Integer windSpeed;
+    private Double windSpeed;
     @SerializedName("wind_deg")
     private Integer windDeg;
     private List<Weather> weather = null;
