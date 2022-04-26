@@ -5,6 +5,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import pl.piotrb.weatherapp.fragment.AdditionalDataFragment;
+import pl.piotrb.weatherapp.fragment.ConfigurationFragment;
+import pl.piotrb.weatherapp.fragment.WeatherDataFragment;
+
 public class MainActivity extends AppCompatActivity implements ConfigurationFragment.ConfigurationFragmentListener {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -22,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements ConfigurationFrag
         }
     }
 
-    // Możliwość wywołania metody z activity poprzez fragment
     @Override
     public void onChange() {
         fragmentManager.beginTransaction()
