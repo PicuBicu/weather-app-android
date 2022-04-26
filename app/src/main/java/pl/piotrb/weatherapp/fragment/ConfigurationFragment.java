@@ -22,12 +22,12 @@ import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
 public class ConfigurationFragment extends Fragment {
 
+    private final WeatherDataRepository repository = WeatherDataRepository.getInstance();
     private Button acceptButton;
     private EditText cityNameText;
     private RadioGroup unitRadioGroup;
     private WeatherDataViewModel viewModel;
     private ConfigurationFragmentListener mainActivity;
-    private final WeatherDataRepository repository = WeatherDataRepository.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class ConfigurationFragment extends Fragment {
             repository.getDailyWeatherData(context, viewModel);
             mainActivity.onChange();
         });
+
     }
 
     public interface ConfigurationFragmentListener {

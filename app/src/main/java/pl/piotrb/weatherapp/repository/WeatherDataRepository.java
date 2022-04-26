@@ -3,7 +3,9 @@ package pl.piotrb.weatherapp.repository;
 import android.util.Log;
 
 import pl.piotrb.weatherapp.model.DailyWeatherDataContext;
+import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
 import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
+import pl.piotrb.weatherapp.model.oncecallapi.WeeklyForecast;
 import pl.piotrb.weatherapp.service.WeatherDataService;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 import retrofit2.Call;
@@ -47,6 +49,31 @@ public class WeatherDataRepository {
             public void onFailure(Call<WeatherData> call, Throwable t) {
                 Log.e("RETROFIT", t.getMessage());
                 model.setWeatherDataError(t.getMessage());
+                Log.e("RETROFIT", "Problem with fetching data from OpenWeatherApi");
+            }
+        });
+    }
+
+    public void getWeeklyForecast(WeeklyForecastDataContext context, WeatherDataViewModel model) {
+        service.getWeeklyForecast(
+                context.getLatitude(),
+                context.getLongitude()
+        ).enqueue(new Callback<WeeklyForecast>() {
+            @Override
+            public void onResponse(Call<WeeklyForecast> call, Response<WeeklyForecast> response) {
+                Log.i("RETROFIT", response.toString());
+                if (response.isSuccessful()) {
+                    Log.i("RETROFIT", "Successfully fetched data from OpenWeatherApi");
+                    assert response.body() != null;
+                    model.setWeeklyForecast(response.body());
+                    Log.i("RETROFIT", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WeeklyForecast> call, Throwable t) {
+                Log.e("RETROFIT", t.getMessage());
+                model.setWeeklyForecastError(t.getMessage());
                 Log.e("RETROFIT", "Problem with fetching data from OpenWeatherApi");
             }
         });

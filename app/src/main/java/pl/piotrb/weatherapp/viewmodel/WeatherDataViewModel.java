@@ -5,10 +5,30 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
+import pl.piotrb.weatherapp.model.oncecallapi.WeeklyForecast;
 
 public class WeatherDataViewModel extends ViewModel {
-    private MutableLiveData<WeatherData> weatherData = new MutableLiveData<>();
-    private MutableLiveData<String> weatherDataError = new MutableLiveData<>();
+
+    private final MutableLiveData<WeatherData> weatherData = new MutableLiveData<>();
+    private final MutableLiveData<String> weatherDataError = new MutableLiveData<>();
+    private final MutableLiveData<WeeklyForecast> weeklyForecast = new MutableLiveData<>();
+    private final MutableLiveData<String> weeklyForecastError = new MutableLiveData<>();
+
+    public LiveData<String> getWeeklyForecastError() {
+        return weeklyForecastError;
+    }
+
+    public void setWeeklyForecastError(String error) {
+        weeklyForecastError.setValue(error);
+    }
+
+    public LiveData<WeeklyForecast> getWeeklyForecast() {
+        return weeklyForecast;
+    }
+
+    public void setWeeklyForecast(WeeklyForecast weeklyForecast) {
+        this.weeklyForecast.setValue(weeklyForecast);
+    }
 
     public LiveData<String> getWeatherDataError() {
         return weatherDataError;

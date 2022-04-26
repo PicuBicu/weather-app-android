@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import pl.piotrb.weatherapp.R;
+import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
+import pl.piotrb.weatherapp.repository.WeatherDataRepository;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
 public class WeatherDataFragment extends Fragment {
@@ -27,6 +29,7 @@ public class WeatherDataFragment extends Fragment {
     private TextView cityNameTextView;
     private TextView timeTextView;
     private WeatherDataViewModel viewModel;
+    private WeatherDataRepository repository = WeatherDataRepository.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +62,24 @@ public class WeatherDataFragment extends Fragment {
             SimpleDateFormat format = new SimpleDateFormat("E yyyy-MM-dd 'at' hh:mm:ss a zzz");
             timeTextView.setText("Data:" + format.format(date));
         });
+
+//        onDailyWeatherData();
+//        onDailyWeatherDataError()
+    }
+
+    private void onDailyWeatherDataError() {
         viewModel.getWeatherDataError().observe(getViewLifecycleOwner(), error -> {
             Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void onDailyWeatherData() {
+        viewModel.getWeatherData().observe(getViewLifecycleOwner(), weatherData -> {
+            Log.i("RETROFIT", "Subscribe to Weather Data");
+            WeeklyForecastDataContext forecast = new WeeklyForecastDataContext();
+            forecast.setLatitude(weatherData.getCoord().getLat());
+            forecast.setLongitude(weatherData.getCoord().getLon());
+            repository.getWeeklyForecast(forecast, viewModel);
         });
     }
 }
