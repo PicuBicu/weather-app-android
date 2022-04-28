@@ -15,6 +15,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 import lombok.val;
 import pl.piotrb.weatherapp.R;
 import pl.piotrb.weatherapp.subscriber.OnWeeklyForecastChange;
@@ -26,6 +35,7 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
     private TextView dateTextView;
     private TextView tempTextView;
     private TextView unitsTextView;
+    private TextView dayNameTextView;
 
     private WeatherDataViewModel viewModel;
     private Integer weekDay;
@@ -47,6 +57,7 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
         dateTextView = root.findViewById(R.id.wf_date_text_view);
         tempTextView = root.findViewById(R.id.wf_temp_text_view);
         unitsTextView = root.findViewById(R.id.wf_units_text_view);
+        dayNameTextView = root.findViewById(R.id.wf_day_name_text_view);
         return root;
     }
 
@@ -63,14 +74,18 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
         viewModel.getWeeklyForecast().observe(getViewLifecycleOwner(), weeklyForecast -> {
             val daily = weeklyForecast.getDailyForecast().get(weekDay);
             assert daily != null;
-            val dateValue = daily.getDt() + "";
             val tempValue = daily.getTemp().getDay() + "";
             val url = "https://openweathermap.org/img/wn/" + daily.getWeather().get(0).getIcon() + "@4x.png";
             Log.i("PICASSO", url);
             Picasso.get()
                     .load(url)
+                    .resize(250, 250)
                     .into(imageView);
-            dateTextView.setText(dateValue);
+            long timeInMillis = TimeUnit.SECONDS.toMillis(daily.getDt());
+            Date date = new Date(timeInMillis);
+            DateFormat formatter = new SimpleDateFormat("EEEE", Locale.getDefault());
+            dateTextView.setText(date.toString());
+            dayNameTextView.setText(formatter.format(date));
             tempTextView.setText(tempValue);
             unitsTextView.setText("C");
         });

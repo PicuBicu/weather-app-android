@@ -17,18 +17,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed"
             android:text="@string/wind_speed"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/wind_speed_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="viewEnd"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -41,18 +43,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed"
             android:text="@string/wind_direction"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/wind_direction_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="viewEnd"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -66,18 +70,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed"
             android:text="@string/humidity"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/humidity_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="viewEnd"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -90,18 +96,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed"
             android:text="@string/visibility"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/visibility_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="viewEnd"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

@@ -17,20 +17,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:autofillHints=""
+            android:fontFamily="sans-serif-condensed-medium"
             android:inputType="textPostalAddress"
             android:text="@string/start_city_name"
             android:textColor="@color/white"
-            android:autofillHints="" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed"
             android:text="Wybierz jednostkę metryczną"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <RadioGroup
             android:id="@+id/unit_system_group"
@@ -43,18 +45,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="casual"
+                android:fontFamily="sans-serif-condensed"
                 android:text="@string/system_metryczny"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/imerial_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="casual"
+                android:fontFamily="sans-serif-condensed"
                 android:text="@string/system_imperialny"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
         </RadioGroup>
 
@@ -62,9 +66,10 @@
             android:id="@+id/accept_config_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed"
             android:text="Akceptuj konfiguracje"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

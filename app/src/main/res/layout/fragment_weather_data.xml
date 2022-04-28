@@ -14,9 +14,9 @@
         android:id="@+id/time_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
+        android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textColor="@android:color/holo_orange_dark"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -52,8 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:contentDescription="@string/string_weather_icon"
-            android:src="@drawable/ic_launcher_background" />
+            android:contentDescription="@string/string_weather_icon" />
 
     </LinearLayout>
 
@@ -66,9 +65,9 @@
             android:id="@+id/pressure_text_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,20 +80,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/geolocation_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="viewEnd"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
