@@ -6,4 +6,8 @@
     <string name="start_city_name">Radomsko</string>
     <string name="system_metryczny">System metryczny</string>
     <string name="system_imperialny">System imperialny</string>
+    <string name="humidity">Wilgotność:</string>
+    <string name="visibility">Widoczność:</string>
+    <string name="wind_speed">Prędkość wiatru</string>
+    <string name="wind_direction">Kierunek wiatru</string>
 </resources>
