@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,11 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.squareup.picasso.Picasso;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import pl.piotrb.weatherapp.R;
 import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
+import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
 import pl.piotrb.weatherapp.repository.WeatherDataRepository;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
@@ -28,6 +34,9 @@ public class WeatherDataFragment extends Fragment {
     private TextView geolocationTextView;
     private TextView cityNameTextView;
     private TextView timeTextView;
+    private TextView tempUnitTextView;
+    private TextView pressureUnitTextView;
+    private ImageView imageView;
     private WeatherDataViewModel viewModel;
     private WeatherDataRepository repository = WeatherDataRepository.getInstance();
 
@@ -46,6 +55,9 @@ public class WeatherDataFragment extends Fragment {
         geolocationTextView = root.findViewById(R.id.geolocation_text_view);
         cityNameTextView = root.findViewById(R.id.city_text_view);
         timeTextView = root.findViewById(R.id.time_text_view);
+        tempUnitTextView = root.findViewById(R.id.temp_unit_text_view);
+        pressureUnitTextView = root.findViewById(R.id.pressure_unit_text_view);
+        imageView = root.findViewById(R.id.image_view);
         return root;
     }
 
@@ -54,32 +66,37 @@ public class WeatherDataFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel.getWeatherData().observe(getViewLifecycleOwner(), weatherData -> {
             Log.i("UI", "Updating weather data fragment UI");
-            pressureTextView.setText("Ciśnienie: " + weatherData.getMain().getPressure());
-            temperatureTextView.setText("Temperatura: " + weatherData.getMain().getTemp());
-            geolocationTextView.setText("Geolokalizacja: " + weatherData.getCoord());
-            cityNameTextView.setText("Miejscowość: " + weatherData.getName());
-            Date date = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("E yyyy-MM-dd 'at' hh:mm:ss a zzz");
-            timeTextView.setText("Data:" + format.format(date));
-        });
-
-//        onDailyWeatherData();
-//        onDailyWeatherDataError()
-    }
-
-    private void onDailyWeatherDataError() {
-        viewModel.getWeatherDataError().observe(getViewLifecycleOwner(), error -> {
-            Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show();
+            updateUI(weatherData);
         });
     }
 
-    private void onDailyWeatherData() {
-        viewModel.getWeatherData().observe(getViewLifecycleOwner(), weatherData -> {
-            Log.i("RETROFIT", "Subscribe to Weather Data");
-            WeeklyForecastDataContext forecast = new WeeklyForecastDataContext();
-            forecast.setLatitude(weatherData.getCoord().getLat());
-            forecast.setLongitude(weatherData.getCoord().getLon());
-            repository.getWeeklyForecast(forecast, viewModel);
-        });
+    private void updateUI(WeatherData weatherData) {
+        pressureTextView.setText(
+                String.format(Locale.getDefault(),
+                        "%d",
+                        weatherData.getMain().getPressure()));
+        temperatureTextView.setText(String.format(
+                Locale.getDefault(),
+                "%f",
+                weatherData.getMain().getTemp()
+        ));
+        geolocationTextView.setText(String.format(
+                Locale.getDefault(),
+                "lat=%f lon=%f",
+                weatherData.getCoord().getLat(),
+                weatherData.getCoord().getLon()
+        ));
+//            TODO K or C
+        tempUnitTextView.setText("C");
+        String iconText = weatherData.getWeather().get(0).getIcon();
+        String url = "https://openweathermap.org/img/wn/" + iconText + "@4x.png";
+        Log.i("PICASSO", url);
+        Picasso.get()
+                .load(url)
+                .into(imageView);
+        pressureUnitTextView.setText("hPA");
+        cityNameTextView.setText(weatherData.getName());
+        DateFormat format = SimpleDateFormat.getDateInstance();
+        timeTextView.setText(format.format(new Date()));
     }
 }

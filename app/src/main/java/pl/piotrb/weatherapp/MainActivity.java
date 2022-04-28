@@ -67,9 +67,10 @@ public class MainActivity extends AppCompatActivity implements ConfigurationFrag
 
     @Override
     public void onChange() {
+//        todo: przekazywanie jednostki C albo kelwiny czy tam farenheity
         fragmentManager.beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.first_fragment, WeatherDataFragment.class,null)
+                .replace(R.id.first_fragment, WeatherDataFragment.class, null)
         .commit();
     }
 
