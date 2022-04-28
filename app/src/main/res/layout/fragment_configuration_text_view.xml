@@ -17,15 +17,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="casual"
             android:inputType="textPostalAddress"
-            android:text="Radomsko"
-            android:textColor="@color/white" />
+            android:text="@string/start_city_name"
+            android:textColor="@color/white"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="casual"
             android:text="Wybierz jednostkę metryczną"
             android:textColor="@color/white" />
 
@@ -40,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="System metryczny"
+                android:fontFamily="casual"
+                android:text="@string/system_metryczny"
                 android:textColor="@color/white" />
 
             <RadioButton
@@ -48,16 +52,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="System imperialny"
+                android:fontFamily="casual"
+                android:text="@string/system_imperialny"
                 android:textColor="@color/white" />
+
         </RadioGroup>
 
         <Button
             android:id="@+id/accept_config_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="casual"
             android:text="Akceptuj konfiguracje"
             android:textColor="@color/white" />
 
     </LinearLayout>
+
 </FrameLayout>

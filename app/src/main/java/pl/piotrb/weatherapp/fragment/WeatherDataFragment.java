@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,11 +17,11 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import pl.piotrb.weatherapp.R;
-import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
 import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
 import pl.piotrb.weatherapp.repository.WeatherDataRepository;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
@@ -35,7 +34,6 @@ public class WeatherDataFragment extends Fragment {
     private TextView cityNameTextView;
     private TextView timeTextView;
     private TextView tempUnitTextView;
-    private TextView pressureUnitTextView;
     private ImageView imageView;
     private WeatherDataViewModel viewModel;
     private WeatherDataRepository repository = WeatherDataRepository.getInstance();
@@ -56,7 +54,6 @@ public class WeatherDataFragment extends Fragment {
         cityNameTextView = root.findViewById(R.id.city_text_view);
         timeTextView = root.findViewById(R.id.time_text_view);
         tempUnitTextView = root.findViewById(R.id.temp_unit_text_view);
-        pressureUnitTextView = root.findViewById(R.id.pressure_unit_text_view);
         imageView = root.findViewById(R.id.image_view);
         return root;
     }
@@ -73,7 +70,7 @@ public class WeatherDataFragment extends Fragment {
     private void updateUI(WeatherData weatherData) {
         pressureTextView.setText(
                 String.format(Locale.getDefault(),
-                        "%d",
+                        "%d hPa",
                         weatherData.getMain().getPressure()));
         temperatureTextView.setText(String.format(
                 Locale.getDefault(),
@@ -94,9 +91,9 @@ public class WeatherDataFragment extends Fragment {
         Picasso.get()
                 .load(url)
                 .into(imageView);
-        pressureUnitTextView.setText("hPA");
         cityNameTextView.setText(weatherData.getName());
-        DateFormat format = SimpleDateFormat.getDateInstance();
-        timeTextView.setText(format.format(new Date()));
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE LLLL yyyy hh:mm:ss");
+        timeTextView.setText(simpleDateFormat.format(calendar.getTime()).toString());
     }
 }
