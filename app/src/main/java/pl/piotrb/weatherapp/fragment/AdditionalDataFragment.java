@@ -14,9 +14,10 @@ import android.widget.TextView;
 
 import lombok.val;
 import pl.piotrb.weatherapp.R;
+import pl.piotrb.weatherapp.subscriber.OnWeatherDataChange;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
-public class AdditionalDataFragment extends Fragment {
+public class AdditionalDataFragment extends Fragment implements OnWeatherDataChange {
 
     private TextView windSpeedTextView;
     private TextView windDirectionTextView;
@@ -24,11 +25,6 @@ public class AdditionalDataFragment extends Fragment {
     private TextView visibilityTextView;
 
     private WeatherDataViewModel viewModel;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +44,8 @@ public class AdditionalDataFragment extends Fragment {
         onWeatherDataChange();
     }
 
-    private void onWeatherDataChange() {
+    @Override
+    public void onWeatherDataChange() {
         viewModel.getWeatherData().observe(getViewLifecycleOwner(), weatherData -> {
             val speedValue = weatherData.getWind().getSpeed() + "m/s";
             val directionValue = weatherData.getWind().getDeg() + " degrees";

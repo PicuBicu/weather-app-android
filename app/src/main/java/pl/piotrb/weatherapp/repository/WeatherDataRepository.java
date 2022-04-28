@@ -57,7 +57,8 @@ public class WeatherDataRepository {
     public void getWeeklyForecast(WeeklyForecastDataContext context, WeatherDataViewModel model) {
         service.getWeeklyForecast(
                 context.getLatitude(),
-                context.getLongitude()
+                context.getLongitude(),
+                context.getUnits()
         ).enqueue(new Callback<WeeklyForecast>() {
             @Override
             public void onResponse(Call<WeeklyForecast> call, Response<WeeklyForecast> response) {

@@ -15,15 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import pl.piotrb.weatherapp.R;
 import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
-import pl.piotrb.weatherapp.repository.WeatherDataRepository;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
 public class WeatherDataFragment extends Fragment {
@@ -36,13 +33,6 @@ public class WeatherDataFragment extends Fragment {
     private TextView tempUnitTextView;
     private ImageView imageView;
     private WeatherDataViewModel viewModel;
-    private WeatherDataRepository repository = WeatherDataRepository.getInstance();
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(WeatherDataViewModel.class);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +51,11 @@ public class WeatherDataFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(WeatherDataViewModel.class);
+        onWeatherDataChange();
+    }
+
+    private void onWeatherDataChange() {
         viewModel.getWeatherData().observe(getViewLifecycleOwner(), weatherData -> {
             Log.i("UI", "Updating weather data fragment UI");
             updateUI(weatherData);
@@ -83,7 +78,6 @@ public class WeatherDataFragment extends Fragment {
                 weatherData.getCoord().getLat(),
                 weatherData.getCoord().getLon()
         ));
-//            TODO K or C
         tempUnitTextView.setText("C");
         String iconText = weatherData.getWeather().get(0).getIcon();
         String url = "https://openweathermap.org/img/wn/" + iconText + "@4x.png";
@@ -94,6 +88,6 @@ public class WeatherDataFragment extends Fragment {
         cityNameTextView.setText(weatherData.getName());
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE LLLL yyyy hh:mm:ss");
-        timeTextView.setText(simpleDateFormat.format(calendar.getTime()).toString());
+        timeTextView.setText(simpleDateFormat.format(calendar.getTime()));
     }
 }

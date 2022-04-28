@@ -1,6 +1,5 @@
 package pl.piotrb.weatherapp.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,29 +16,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import pl.piotrb.weatherapp.R;
 import pl.piotrb.weatherapp.model.DailyWeatherDataContext;
-import pl.piotrb.weatherapp.repository.WeatherDataRepository;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
 public class ConfigurationFragment extends Fragment {
 
-    private final WeatherDataRepository repository = WeatherDataRepository.getInstance();
     private Button acceptButton;
     private EditText cityNameText;
     private RadioGroup unitRadioGroup;
     private WeatherDataViewModel viewModel;
-    private ConfigurationFragmentListener mainActivity;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(WeatherDataViewModel.class);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mainActivity = (ConfigurationFragmentListener) context;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +37,7 @@ public class ConfigurationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(WeatherDataViewModel.class);
         acceptButton.setOnClickListener((button) -> {
             Log.i("UI", "Accept config button has been clicked");
             DailyWeatherDataContext context = new DailyWeatherDataContext();
@@ -62,13 +47,7 @@ public class ConfigurationFragment extends Fragment {
             } else {
                 context.setUnit("imperial");
             }
-            repository.getDailyWeatherData(context, viewModel);
-            mainActivity.onChange();
+            viewModel.setDailyWeatherContextData(context);
         });
-
-    }
-
-    public interface ConfigurationFragmentListener {
-        void onChange();
     }
 }

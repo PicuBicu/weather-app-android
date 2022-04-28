@@ -1,26 +1,33 @@
 package pl.piotrb.weatherapp.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.squareup.picasso.Picasso;
 
+import lombok.val;
 import pl.piotrb.weatherapp.R;
+import pl.piotrb.weatherapp.subscriber.OnWeeklyForecastChange;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
-public class WeeklyForecastFragment extends Fragment {
+public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecastChange {
+
+    private ImageView imageView;
+    private TextView dateTextView;
+    private TextView tempTextView;
+    private TextView unitsTextView;
 
     private WeatherDataViewModel viewModel;
-    private TextView dayTextView;
     private Integer weekDay;
 
     public static WeeklyForecastFragment newInstance(Integer weekDay) {
@@ -33,16 +40,13 @@ public class WeeklyForecastFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(WeatherDataViewModel.class);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_weekly_forecast, container, false);
-        dayTextView = root.findViewById(R.id.day_text_view);
+        imageView = root.findViewById(R.id.wf_image_view);
+        dateTextView = root.findViewById(R.id.wf_date_text_view);
+        tempTextView = root.findViewById(R.id.wf_temp_text_view);
+        unitsTextView = root.findViewById(R.id.wf_units_text_view);
         return root;
     }
 
@@ -50,19 +54,25 @@ public class WeeklyForecastFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         weekDay = getArguments().getInt("weekDay");
+        viewModel = new ViewModelProvider(requireActivity()).get(WeatherDataViewModel.class);
         onWeeklyForecastChange();
-        onWeeklyForecastError();
     }
 
-    private void onWeeklyForecastChange() {
+    @Override
+    public void onWeeklyForecastChange() {
         viewModel.getWeeklyForecast().observe(getViewLifecycleOwner(), weeklyForecast -> {
-            dayTextView.setText(weeklyForecast.getDailyForecast().get(weekDay).toString());
-        });
-    }
-
-    private void onWeeklyForecastError() {
-        viewModel.getWeeklyForecastError().observe(getViewLifecycleOwner(), error -> {
-            Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+            val daily = weeklyForecast.getDailyForecast().get(weekDay);
+            assert daily != null;
+            val dateValue = daily.getDt() + "";
+            val tempValue = daily.getTemp().getDay() + "";
+            val url = "https://openweathermap.org/img/wn/" + daily.getWeather().get(0).getIcon() + "@4x.png";
+            Log.i("PICASSO", url);
+            Picasso.get()
+                    .load(url)
+                    .into(imageView);
+            dateTextView.setText(dateValue);
+            tempTextView.setText(tempValue);
+            unitsTextView.setText("C");
         });
     }
 }
