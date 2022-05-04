@@ -12,17 +12,43 @@
         android:background="@drawable/shape"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_city_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:autofillHints=""
-            android:fontFamily="sans-serif-condensed-medium"
-            android:inputType="textPostalAddress"
-            android:text="@string/start_city_name"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_city_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:fontFamily="sans-serif-condensed-medium"
+                android:inputType="textPostalAddress"
+                android:text="@string/start_city_name"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/liked_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/star_button_description"
+                android:minWidth="48dp"
+                android:src="@android:drawable/btn_star_big_on" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/star_button_description"
+            android:popupBackground="@drawable/shape"
+            android:spinnerMode="dropdown" />
 
         <TextView
             android:id="@+id/textView"
@@ -38,7 +64,7 @@
             android:id="@+id/unit_system_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="2">
 
             <RadioButton
                 android:id="@+id/metric_button"
