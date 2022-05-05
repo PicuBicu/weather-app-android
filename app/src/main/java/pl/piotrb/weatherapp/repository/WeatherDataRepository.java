@@ -1,87 +1,63 @@
 package pl.piotrb.weatherapp.repository;
 
-import android.util.Log;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import pl.piotrb.weatherapp.model.DailyWeatherDataContext;
 import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
-import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
-import pl.piotrb.weatherapp.model.oncecallapi.WeeklyForecast;
-import pl.piotrb.weatherapp.service.WeatherDataService;
+import pl.piotrb.weatherapp.strategy.DataProviderStrategy;
+import pl.piotrb.weatherapp.strategy.SharedPreferencesStrategy;
+import pl.piotrb.weatherapp.strategy.WeatherApiStrategy;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class WeatherDataRepository {
 
     private static WeatherDataRepository INSTANCE = null;
 
     private ConnectivityManager connectivityManager;
+    private SharedPreferences sharedPreferences;
 
     private WeatherDataRepository() {
 
     }
 
-    private WeatherDataRepository(ConnectivityManager connectivityManager) {
+    private WeatherDataRepository(ConnectivityManager connectivityManager, SharedPreferences sharedPreferences) {
         this.connectivityManager = connectivityManager;
+        this.sharedPreferences = sharedPreferences;
     }
 
-    public static WeatherDataRepository getInstance(ConnectivityManager connectivityManager) {
+    public static WeatherDataRepository getInstance(ConnectivityManager connectivityManager, SharedPreferences sharedPreferences) {
         if (INSTANCE == null) {
-            INSTANCE = new WeatherDataRepository(connectivityManager);
+            INSTANCE = new WeatherDataRepository(connectivityManager, sharedPreferences);
         }
         return INSTANCE;
     }
 
-    public void getDailyWeatherData(DailyWeatherDataContext context, WeatherDataViewModel model) {
-        service.getWeatherData(
-                context.getCityName(),
-                context.getUnit()
-        ).enqueue(new Callback<WeatherData>() {
-            @Override
-            public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
-                Log.i("RETROFIT", response.toString());
-                if (response.isSuccessful()) {
-                    Log.i("RETROFIT", "Successfully fetched data from OpenWeatherApi");
-                    assert response.body() != null;
-                    model.setWeatherData(response.body());
-                    Log.i("RETROFIT", response.body().toString());
-                }
-            }
+    private boolean isNetworkAvailable() {
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
-            @Override
-            public void onFailure(Call<WeatherData> call, Throwable t) {
-                Log.e("RETROFIT", t.getMessage());
-                model.setWeatherDataError(t.getMessage());
-                Log.e("RETROFIT", "Problem with fetching data from OpenWeatherApi");
-            }
-        });
+    public void getDailyWeatherData(DailyWeatherDataContext context, WeatherDataViewModel model) {
+        DataProviderStrategy providerStrategy;
+        if (isNetworkAvailable()) {
+            providerStrategy = new WeatherApiStrategy();
+        } else {
+            providerStrategy = new SharedPreferencesStrategy(this.sharedPreferences);
+        }
+        providerStrategy.provideWeatherData(context, model);
     }
 
     public void getWeeklyForecast(WeeklyForecastDataContext context, WeatherDataViewModel model) {
-        service.getWeeklyForecast(
-                context.getLatitude(),
-                context.getLongitude(),
-                context.getUnits()
-        ).enqueue(new Callback<WeeklyForecast>() {
-            @Override
-            public void onResponse(Call<WeeklyForecast> call, Response<WeeklyForecast> response) {
-                Log.i("RETROFIT", response.toString());
-                if (response.isSuccessful()) {
-                    Log.i("RETROFIT", "Successfully fetched data from OpenWeatherApi");
-                    assert response.body() != null;
-                    model.setWeeklyForecast(response.body());
-                    Log.i("RETROFIT", response.body().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<WeeklyForecast> call, Throwable t) {
-                Log.e("RETROFIT", t.getMessage());
-                model.setWeeklyForecastError(t.getMessage());
-                Log.e("RETROFIT", "Problem with fetching data from OpenWeatherApi");
-            }
-        });
+        DataProviderStrategy providerStrategy;
+        if (isNetworkAvailable()) {
+            providerStrategy = new WeatherApiStrategy();
+        } else {
+            providerStrategy = new SharedPreferencesStrategy(this.sharedPreferences);
+        }
+        providerStrategy.provideWeatherForecast(context, model);
     }
 }
