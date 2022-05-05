@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import pl.piotrb.weatherapp.model.DailyWeatherDataContext;
 import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
@@ -44,8 +45,10 @@ public class WeatherDataRepository {
     public void getDailyWeatherData(DailyWeatherDataContext context, WeatherDataViewModel model) {
         DataProviderStrategy providerStrategy;
         if (isNetworkAvailable()) {
-            providerStrategy = new WeatherApiStrategy();
+            Log.i("APP", "Loading from weather api");
+            providerStrategy = new WeatherApiStrategy(sharedPreferences);
         } else {
+            Log.i("APP", "Loading from shared preferences");
             providerStrategy = new SharedPreferencesStrategy(this.sharedPreferences);
         }
         providerStrategy.provideWeatherData(context, model);
@@ -54,8 +57,10 @@ public class WeatherDataRepository {
     public void getWeeklyForecast(WeeklyForecastDataContext context, WeatherDataViewModel model) {
         DataProviderStrategy providerStrategy;
         if (isNetworkAvailable()) {
-            providerStrategy = new WeatherApiStrategy();
+            providerStrategy = new WeatherApiStrategy(sharedPreferences);
+            Log.i("APP", "Loading from weather api");
         } else {
+            Log.i("APP", "Loading from shared preferences");
             providerStrategy = new SharedPreferencesStrategy(this.sharedPreferences);
         }
         providerStrategy.provideWeatherForecast(context, model);
