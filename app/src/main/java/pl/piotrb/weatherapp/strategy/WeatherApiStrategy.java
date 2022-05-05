@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import pl.piotrb.weatherapp.model.DailyWeatherDataContext;
 import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
@@ -26,16 +25,15 @@ public class WeatherApiStrategy implements DataProviderStrategy {
     private final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
-
-    public WeatherApiStrategy(SharedPreferences sharedPreferences) {
-        this.sharedPreferences = sharedPreferences;
-    }
-
     private final WeatherDataService service = new retrofit2.Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherDataService.class);
+
+    public WeatherApiStrategy(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
+    }
 
     @Override
     public void provideWeatherData(DailyWeatherDataContext context, WeatherDataViewModel viewModel) {
@@ -53,6 +51,8 @@ public class WeatherApiStrategy implements DataProviderStrategy {
                     viewModel.setWeatherData(weatherData);
                     Log.i("RETROFIT", response.body().toString());
                     addWeatherDataIfCityIsLiked(context.getCityName(), weatherData);
+                } else {
+                    viewModel.setWeatherDataError(response.message());
                 }
             }
 
@@ -82,6 +82,8 @@ public class WeatherApiStrategy implements DataProviderStrategy {
                     viewModel.setWeeklyForecast(response.body());
                     Log.i("RETROFIT", response.body().toString());
                     addWeeklyForecastIfCityIsLiked(context.getCityName(), weeklyForecast);
+                } else {
+                    viewModel.setWeatherDataError(response.message());
                 }
             }
 
@@ -95,8 +97,8 @@ public class WeatherApiStrategy implements DataProviderStrategy {
     }
 
     private boolean isCityLiked(String cityName) {
-        Set set = sharedPreferences.getStringSet("cities", new HashSet<>());
-        return set.stream()
+        return sharedPreferences.getStringSet("cities", new HashSet<>())
+                .stream()
                 .anyMatch(city -> city.equals(cityName));
     }
 
@@ -105,9 +107,9 @@ public class WeatherApiStrategy implements DataProviderStrategy {
         if (isCityLiked(cityName)) {
             Log.i("APP", "Saving data for city " + cityName);
             String value = gson.toJson(weatherData);
-            editor.putString(cityName+"_wd", value);
+            editor.putString(cityName + "_wd", value);
         }
-        editor.commit();
+        editor.apply();
     }
 
     private void addWeeklyForecastIfCityIsLiked(String cityName, WeeklyForecast weeklyForecast) {
@@ -115,8 +117,8 @@ public class WeatherApiStrategy implements DataProviderStrategy {
         if (isCityLiked(cityName)) {
             Log.i("APP", "Saving data for city " + cityName);
             String value = gson.toJson(weeklyForecast);
-            editor.putString(cityName+"_wf", value);
+            editor.putString(cityName + "_wf", value);
         }
-        editor.commit();
+        editor.apply();
     }
 }
