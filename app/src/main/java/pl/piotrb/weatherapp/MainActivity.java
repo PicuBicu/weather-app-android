@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        if (viewPager.getCurrentItem() == 0) {
-            super.onBackPressed();
-        } else {
-            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-        }
+        fragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.first_fragment, ConfigurationFragment.class, null)
+                .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
+                .commit();
     }
 
     @Override
