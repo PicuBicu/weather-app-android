@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements
         OnWeeklyForecastError {
 
     private static final int NUM_PAGES = 7;
-    private final WeatherDataRepository repository = WeatherDataRepository.getInstance((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE));
     private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private WeatherDataRepository repository;
     private WeatherDataViewModel viewModel;
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;
@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        repository = WeatherDataRepository.getInstance(
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE),
+                getPreferences(Context.MODE_PRIVATE));
         if (savedInstanceState == null) {
 
             // Handling view model
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements
             forecast.setUnits(unitValue);
             forecast.setLatitude(weatherData.getCoord().getLat());
             forecast.setLongitude(weatherData.getCoord().getLon());
+            forecast.setCityName(weatherData.getName());
             repository.getWeeklyForecast(forecast, viewModel);
         });
     }

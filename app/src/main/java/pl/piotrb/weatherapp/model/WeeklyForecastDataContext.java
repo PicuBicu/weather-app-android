@@ -11,4 +11,5 @@ public class WeeklyForecastDataContext {
     private String units;
     private Double latitude;
     private Double longitude;
+    private String cityName;
 }
