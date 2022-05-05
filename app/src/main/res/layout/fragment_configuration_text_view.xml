@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragment.ConfigurationFragment">
 
     <LinearLayout
@@ -21,14 +21,14 @@
             <EditText
                 android:id="@+id/edit_city_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:fontFamily="sans-serif-condensed-medium"
                 android:inputType="textPostalAddress"
                 android:text="@string/start_city_name"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_size" />
 
             <ImageButton
                 android:id="@+id/liked_button"
@@ -39,12 +39,13 @@
                 android:contentDescription="@string/star_button_description"
                 android:minWidth="48dp"
                 android:src="@android:drawable/btn_star_big_on" />
+
         </LinearLayout>
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/star_button_description"
             android:popupBackground="@drawable/shape"
@@ -58,13 +59,13 @@
             android:fontFamily="sans-serif-condensed"
             android:text="Wybierz jednostkę metryczną"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
 
         <RadioGroup
             android:id="@+id/unit_system_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2">
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/metric_button"
@@ -74,7 +75,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/system_metryczny"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_size" />
 
             <RadioButton
                 android:id="@+id/imerial_button"
@@ -84,7 +85,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/system_imperialny"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_size" />
 
         </RadioGroup>
 
@@ -92,10 +93,11 @@
             android:id="@+id/accept_config_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:fontFamily="sans-serif-condensed"
             android:text="Akceptuj konfiguracje"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
 
     </LinearLayout>
 
