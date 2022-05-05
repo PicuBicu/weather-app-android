@@ -4,9 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -37,12 +39,25 @@ public class MainActivity extends AppCompatActivity implements
     private FragmentStateAdapter pagerAdapter;
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
+            fragmentManager.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.first_fragment, ConfigurationFragment.class, null)
+                    .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onBackPressed() {
-        fragmentManager.beginTransaction()
-                .setReorderingAllowed(true)
-                .add(R.id.first_fragment, ConfigurationFragment.class, null)
-                .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
-                .commit();
+        if (viewPager.getCurrentItem() == 0) {
+            super.onBackPressed();
+        } else {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        }
     }
 
     @Override
@@ -52,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements
         repository = WeatherDataRepository.getInstance(
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE),
                 getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE));
+
         // Handling view model
         viewModel = new ViewModelProvider(this)
                 .get(WeatherDataViewModel.class);
@@ -70,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements
                 .add(R.id.first_fragment, ConfigurationFragment.class, null)
                 .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
                 .commit();
-
     }
 
     // Setting daily weather context will lead to replacing config fragment with weather data fragment
