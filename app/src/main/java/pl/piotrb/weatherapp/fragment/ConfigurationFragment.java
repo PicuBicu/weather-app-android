@@ -38,7 +38,12 @@ public class ConfigurationFragment extends Fragment {
     private ImageButton likedButton;
     private RadioGroup unitRadioGroup;
     private WeatherDataViewModel viewModel;
-    private ArrayAdapter<String> arrayAdapter;
+
+    private void addNewCity(String cityName) {
+        if (!isCityLiked(cityName)) {
+            cities.add(cityName);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,11 +56,6 @@ public class ConfigurationFragment extends Fragment {
         return root;
     }
 
-    private void addNewCity(String cityName) {
-        cities.add(cityName);
-        arrayAdapter.add(cityName);
-    }
-
     private boolean isCityLiked(String cityName) {
         return cities
                 .stream()
@@ -64,7 +64,6 @@ public class ConfigurationFragment extends Fragment {
 
     private void removeCity(String cityName) {
         cities.remove(cityName);
-        arrayAdapter.remove(cityName);
     }
 
     public void loadCities() {
@@ -83,7 +82,7 @@ public class ConfigurationFragment extends Fragment {
     }
 
     private void initSpinner(List<String> items) {
-        arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.spinner_item, items);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.spinner_item, items);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
