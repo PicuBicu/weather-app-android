@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity implements
         if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
             fragmentManager.beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.first_fragment, ConfigurationFragment.class, null)
-                    .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
+                    .replace(R.id.first_fragment, ConfigurationFragment.class, null)
                     .commit();
             return true;
         }
