@@ -24,7 +24,7 @@ public class SharedPreferencesStrategy implements DataProviderStrategy {
 
     @Override
     public void provideWeatherData(DailyWeatherDataContext context, WeatherDataViewModel viewModel) {
-        String value = sharedPreferences.getString(context.getCityName(), "");
+        String value = sharedPreferences.getString(context.getCityName()+"_wd", "");
         WeatherData weatherData = gson.fromJson(value, WeatherData.class);
         if (weatherData == null) {
             viewModel.setWeatherDataError("No data for city " + context.getCityName());
@@ -35,7 +35,7 @@ public class SharedPreferencesStrategy implements DataProviderStrategy {
 
     @Override
     public void provideWeatherForecast(WeeklyForecastDataContext context, WeatherDataViewModel viewModel) {
-        String value = sharedPreferences.getString(context.getCityName(), "");
+        String value = sharedPreferences.getString(context.getCityName()+"_wf", "");
         WeeklyForecast weeklyForecast = gson.fromJson(value, WeeklyForecast.class);
         if (weeklyForecast == null) {
             viewModel.setWeeklyForecastError("No data for city " + context.getCityName());

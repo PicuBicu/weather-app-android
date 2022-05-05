@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         repository = WeatherDataRepository.getInstance(
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE),
-                getPreferences(Context.MODE_PRIVATE));
+                getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE));
         if (savedInstanceState == null) {
 
             // Handling view model
