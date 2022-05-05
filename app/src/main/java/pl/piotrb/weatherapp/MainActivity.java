@@ -1,9 +1,9 @@
 package pl.piotrb.weatherapp;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements
         OnWeeklyForecastError {
 
     private static final int NUM_PAGES = 7;
-    private final WeatherDataRepository repository = WeatherDataRepository.getInstance();
+    private final WeatherDataRepository repository = WeatherDataRepository.getInstance((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE));
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private WeatherDataViewModel viewModel;
     private ViewPager2 viewPager;

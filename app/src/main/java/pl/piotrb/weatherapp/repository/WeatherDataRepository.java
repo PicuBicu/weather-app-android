@@ -16,15 +16,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WeatherDataRepository {
 
     private static WeatherDataRepository INSTANCE = null;
-    private final WeatherDataService service = new retrofit2.Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(WeatherDataService.class);
 
-    public static WeatherDataRepository getInstance() {
+    private ConnectivityManager connectivityManager;
+
+    private WeatherDataRepository() {
+
+    }
+
+    private WeatherDataRepository(ConnectivityManager connectivityManager) {
+        this.connectivityManager = connectivityManager;
+    }
+
+    public static WeatherDataRepository getInstance(ConnectivityManager connectivityManager) {
         if (INSTANCE == null) {
-            INSTANCE = new WeatherDataRepository();
+            INSTANCE = new WeatherDataRepository(connectivityManager);
         }
         return INSTANCE;
     }
