@@ -52,27 +52,25 @@ public class MainActivity extends AppCompatActivity implements
         repository = WeatherDataRepository.getInstance(
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE),
                 getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE));
-        if (savedInstanceState == null) {
+        // Handling view model
+        viewModel = new ViewModelProvider(this)
+                .get(WeatherDataViewModel.class);
+        onDailyWeatherDataContextChange();
+        onWeatherDataChange();
+        onWeeklyForecastError();
+        onWeatherDataError();
 
-            // Handling view model
-            viewModel = new ViewModelProvider(this)
-                    .get(WeatherDataViewModel.class);
-            onDailyWeatherDataContextChange();
-            onWeatherDataChange();
-            onWeeklyForecastError();
-            onWeatherDataError();
+        // Adding fragment and view pager
+        viewPager = findViewById(R.id.pager);
+        viewPager.setPageTransformer(new ZoomOutPageTransformer());
+        pagerAdapter = new ScreenSlidePageAdapter(this, NUM_PAGES);
+        viewPager.setAdapter(pagerAdapter);
+        fragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.first_fragment, ConfigurationFragment.class, null)
+                .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
+                .commit();
 
-            // Adding fragment and view pager
-            viewPager = findViewById(R.id.pager);
-            viewPager.setPageTransformer(new ZoomOutPageTransformer());
-            pagerAdapter = new ScreenSlidePageAdapter(this, NUM_PAGES);
-            viewPager.setAdapter(pagerAdapter);
-            fragmentManager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.first_fragment, ConfigurationFragment.class, null)
-                    .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
-                    .commit();
-        }
     }
 
     // Setting daily weather context will lead to replacing config fragment with weather data fragment
