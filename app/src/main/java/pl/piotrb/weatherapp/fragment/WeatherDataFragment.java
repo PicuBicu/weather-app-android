@@ -78,7 +78,15 @@ public class WeatherDataFragment extends Fragment {
                 weatherData.getCoord().getLat(),
                 weatherData.getCoord().getLon()
         ));
-        tempUnitTextView.setText("C");
+        String unit = viewModel.getDailyWeatherContextData().getValue().getUnit();
+        if (unit == null) {
+            unit = "C";
+        }
+        if (unit.equals("F")) {
+            tempUnitTextView.setText("F");
+        } else {
+            tempUnitTextView.setText("C");
+        }
         String iconText = weatherData.getWeather().get(0).getIcon();
         String url = "https://openweathermap.org/img/wn/" + iconText + "@4x.png";
         Log.i("PICASSO", url);
