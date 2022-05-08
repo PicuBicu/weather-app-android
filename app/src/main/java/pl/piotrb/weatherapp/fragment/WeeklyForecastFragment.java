@@ -32,10 +32,12 @@ import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecastChange {
 
     private ImageView imageView;
-    private TextView dateTextView;
     private TextView tempTextView;
     private TextView unitsTextView;
     private TextView dayNameTextView;
+    private TextView humidityTextView;
+    private TextView windDirectionTextView;
+    private TextView windSpeedTextView;
 
     private WeatherDataViewModel viewModel;
     private Integer weekDay;
@@ -54,10 +56,12 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_weekly_forecast, container, false);
         imageView = root.findViewById(R.id.wf_image_view);
-        dateTextView = root.findViewById(R.id.wf_date_text_view);
         tempTextView = root.findViewById(R.id.wf_temp_text_view);
         unitsTextView = root.findViewById(R.id.wf_units_text_view);
         dayNameTextView = root.findViewById(R.id.wf_day_name_text_view);
+        humidityTextView = root.findViewById(R.id.wf_humiditiy_text_view);
+        windDirectionTextView = root.findViewById(R.id.wf_wind_direction_text_view);
+        windSpeedTextView = root.findViewById(R.id.wf_wind_speed_text_view);
         return root;
     }
 
@@ -76,6 +80,9 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
             assert daily != null;
             val tempValue = daily.getTemp().getDay() + "";
             val url = "https://openweathermap.org/img/wn/" + daily.getWeather().get(0).getIcon() + "@4x.png";
+            val windDirection = daily.getWindDeg() + "";
+            val windSpeed = daily.getWindSpeed() + "";
+            val humidity = daily.getHumidity() + "";
             Log.i("PICASSO", url);
             Picasso.get()
                     .load(url)
@@ -84,10 +91,12 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
             long timeInMillis = TimeUnit.SECONDS.toMillis(daily.getDt());
             Date date = new Date(timeInMillis);
             DateFormat formatter = new SimpleDateFormat("EEEE", Locale.getDefault());
-            dateTextView.setText(date.toString());
             dayNameTextView.setText(formatter.format(date));
             tempTextView.setText(tempValue);
             unitsTextView.setText("C");
+            humidityTextView.setText(humidity);
+            windDirectionTextView.setText(windDirection);
+            windSpeedTextView.setText(windSpeed);
         });
     }
 }

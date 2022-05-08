@@ -4,66 +4,188 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal|center_vertical">
 
-    <LinearLayout
+
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:background="@drawable/shape"
-        android:orientation="vertical">
+        android:gravity="center_horizontal|center_vertical">
 
-        <TextView
-            android:id="@+id/wf_day_name_text_view"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size" />
-
-        <ImageView
-            android:id="@+id/wf_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/string_weather_icon" />
-
-        <TextView
-            android:id="@+id/wf_date_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical">
 
             <TextView
-                android:id="@+id/wf_temp_text_view"
+                android:id="@+id/wf_day_name_text_view"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textAlignment="viewEnd"
+                android:layout_height="wrap_content"
+                android:layout_gravity="clip_vertical"
+                android:layout_marginEnd="5sp"
+                android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
-                android:id="@+id/wf_units_text_view"
+                android:id="@+id/textView20"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="clip_vertical"
+                android:layout_marginEnd="5sp"
+                android:gravity="center"
+                android:text="@string/temperature"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="clip_vertical"
+                android:layout_marginEnd="5sp"
+                android:gravity="center"
+                android:text="@string/wind_speed"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="clip_vertical"
+                android:layout_marginEnd="5sp"
+                android:gravity="center"
+                android:text="@string/wind_direction"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="clip_vertical"
+                android:layout_marginEnd="5sp"
+                android:gravity="center"
+                android:text="@string/humidity"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageView
+                android:id="@+id/wf_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="clip_vertical"
+                android:contentDescription="@string/string_weather_icon" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_gravity="clip_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/wf_temp_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/wf_units_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAlignment="viewStart"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="clip_vertical">
+
+                <TextView
+                    android:id="@+id/wf_wind_direction_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/speed_unit"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="clip_vertical">
+
+                <TextView
+                    android:id="@+id/wf_wind_speed_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/degrees_unit"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="clip_vertical">
+
+                <TextView
+                    android:id="@+id/wf_humiditiy_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/humidity_unit"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
 </ScrollView>
 
