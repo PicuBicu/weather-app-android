@@ -49,8 +49,8 @@ public class AdditionalDataFragment extends Fragment implements OnWeatherDataCha
         viewModel.getWeatherData().observe(getViewLifecycleOwner(), weatherData -> {
             val speedValue = weatherData.getWind().getSpeed() + "m/s";
             val directionValue = weatherData.getWind().getDeg() + " degrees";
-            val humidityValue = weatherData.getWind().getSpeed() + "%";
-            val visibilityValue = weatherData.getWind().getSpeed() + " m";
+            val humidityValue = weatherData.getMain().getHumidity() + "%";
+            val visibilityValue = weatherData.getVisibility() + " m";
             windSpeedTextView.setText(speedValue);
             windDirectionTextView.setText(directionValue);
             humidityTextView.setText(humidityValue);
