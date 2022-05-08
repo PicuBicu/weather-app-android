@@ -15,4 +15,5 @@
     <string name="temperature">Temperatura</string>
     <string name="degrees_unit">degrees</string>
     <string name="humidity_unit">%</string>
+    <string name="visibility_unit">m</string>
 </resources>
