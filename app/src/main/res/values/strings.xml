@@ -11,4 +11,8 @@
     <string name="wind_speed">Prędkość wiatru</string>
     <string name="wind_direction">Kierunek wiatru</string>
     <string name="star_button_description">Star button used to add city to liked cities</string>
+    <string name="speed_unit">m/s</string>
+    <string name="temperature">Temperatura</string>
+    <string name="degrees_unit">degrees</string>
+    <string name="humidity_unit">%</string>
 </resources>
