@@ -4,8 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="string_weather_icon">weather icon</string>
     <string name="start_city_name">Radomsko</string>
-    <string name="system_metryczny">System metryczny</string>
-    <string name="system_imperialny">System imperialny</string>
+    <string name="system_metryczny">Celcjusz</string>
+    <string name="system_imperialny">Fahrenheit</string>
     <string name="humidity">Wilgotność:</string>
     <string name="visibility">Widoczność:</string>
     <string name="wind_speed">Prędkość wiatru</string>
