@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,6 +65,11 @@ public class ConfigurationFragment extends Fragment {
 
     private void removeCity(String cityName) {
         cities.remove(cityName);
+        SharedPreferences sharedPref = requireActivity().getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(cityName + "_wd");
+        editor.remove(cityName + "_wf");
+        editor.apply();
     }
 
     public void loadCities() {
