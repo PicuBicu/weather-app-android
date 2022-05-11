@@ -18,9 +18,13 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
+import lombok.val;
+import lombok.var;
 import pl.piotrb.weatherapp.R;
 import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
+import pl.piotrb.weatherapp.utils.TemperatureConverter;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
 public class WeatherDataFragment extends Fragment {
@@ -67,26 +71,31 @@ public class WeatherDataFragment extends Fragment {
                 String.format(Locale.getDefault(),
                         "%d hPa",
                         weatherData.getMain().getPressure()));
-        temperatureTextView.setText(String.format(
-                Locale.getDefault(),
-                "%f",
-                weatherData.getMain().getTemp()
-        ));
+
         geolocationTextView.setText(String.format(
                 Locale.getDefault(),
                 "lat=%f lon=%f",
                 weatherData.getCoord().getLat(),
                 weatherData.getCoord().getLon()
         ));
-        String unit = viewModel.getDailyWeatherContextData().getValue().getUnit();
+
+        String unit = Objects.requireNonNull(viewModel.getDailyWeatherContextData().getValue()).getUnit();
         if (unit == null) {
             unit = "C";
         }
+        Double value = weatherData.getMain().getTemp();
         if (unit.equals("F")) {
+            value = TemperatureConverter.convertFromCelsiusToFahrenheit(value);
             tempUnitTextView.setText("F");
         } else {
             tempUnitTextView.setText("C");
         }
+        temperatureTextView.setText(String.format(
+                Locale.getDefault(),
+                "%.2f",
+                value
+        ));
+
         String iconText = weatherData.getWeather().get(0).getIcon();
         String url = "https://openweathermap.org/img/wn/" + iconText + "@4x.png";
         Log.i("PICASSO", url);

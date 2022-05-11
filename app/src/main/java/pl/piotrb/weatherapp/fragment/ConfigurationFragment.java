@@ -47,7 +47,7 @@ public class ConfigurationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_configuration_text_view, container, false);
+        View root = inflater.inflate(R.layout.fragment_configuration, container, false);
         cityNameText = root.findViewById(R.id.edit_city_name);
         unitRadioGroup = root.findViewById(R.id.unit_system_group);
         spinner = root.findViewById(R.id.spinner);
@@ -120,9 +120,9 @@ public class ConfigurationFragment extends Fragment {
             DailyWeatherDataContext context = new DailyWeatherDataContext();
             context.setCityName(cityNameText.getText().toString());
             if (unitRadioGroup.getCheckedRadioButtonId() == R.id.metric_button) {
-                context.setUnit("metric");
+                context.setUnit("C");
             } else {
-                context.setUnit("imperial");
+                context.setUnit("F");
             }
             viewModel.setDailyWeatherContextData(context);
         });

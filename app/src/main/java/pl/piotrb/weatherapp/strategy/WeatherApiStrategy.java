@@ -38,8 +38,7 @@ public class WeatherApiStrategy implements DataProviderStrategy {
     @Override
     public void provideWeatherData(DailyWeatherDataContext context, WeatherDataViewModel viewModel) {
         service.getWeatherData(
-                context.getCityName(),
-                context.getUnit()
+                context.getCityName()
         ).enqueue(new Callback<WeatherData>() {
             @Override
             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
@@ -69,8 +68,7 @@ public class WeatherApiStrategy implements DataProviderStrategy {
     public void provideWeatherForecast(WeeklyForecastDataContext context, WeatherDataViewModel viewModel) {
         service.getWeeklyForecast(
                 context.getLatitude(),
-                context.getLongitude(),
-                context.getUnits()
+                context.getLongitude()
         ).enqueue(new Callback<WeeklyForecast>() {
             @Override
             public void onResponse(Call<WeeklyForecast> call, Response<WeeklyForecast> response) {

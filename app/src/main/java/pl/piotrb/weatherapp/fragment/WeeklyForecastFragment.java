@@ -22,11 +22,13 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import lombok.val;
 import pl.piotrb.weatherapp.R;
 import pl.piotrb.weatherapp.subscriber.OnWeeklyForecastChange;
+import pl.piotrb.weatherapp.utils.TemperatureConverter;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
 public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecastChange {
@@ -78,7 +80,24 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
         viewModel.getWeeklyForecast().observe(getViewLifecycleOwner(), weeklyForecast -> {
             val daily = weeklyForecast.getDailyForecast().get(weekDay);
             assert daily != null;
-            val tempValue = daily.getTemp().getDay() + "";
+
+            String unit = Objects.requireNonNull(viewModel.getDailyWeatherContextData().getValue()).getUnit();
+            if (unit == null) {
+                unit = "C";
+            }
+            Double value = daily.getTemp().getDay();
+            if (unit.equals("F")) {
+                value = TemperatureConverter.convertFromCelsiusToFahrenheit(value);
+                unitsTextView.setText("F");
+            } else {
+                unitsTextView.setText("C");
+            }
+            tempTextView.setText(String.format(
+                    Locale.getDefault(),
+                    "%.2f",
+                    value
+            ));
+
             val url = "https://openweathermap.org/img/wn/" + daily.getWeather().get(0).getIcon() + "@4x.png";
             val windDirection = daily.getWindDeg() + "";
             val windSpeed = daily.getWindSpeed() + "";
@@ -92,8 +111,6 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
             Date date = new Date(timeInMillis);
             DateFormat formatter = new SimpleDateFormat("EEEE", Locale.getDefault());
             dayNameTextView.setText(formatter.format(date));
-            tempTextView.setText(tempValue);
-            unitsTextView.setText("C");
             humidityTextView.setText(humidity);
             windDirectionTextView.setText(windDirection);
             windSpeedTextView.setText(windSpeed);
