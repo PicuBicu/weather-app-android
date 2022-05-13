@@ -18,6 +18,7 @@ import lombok.val;
 import pl.piotrb.weatherapp.fragment.AdditionalDataFragment;
 import pl.piotrb.weatherapp.fragment.ConfigurationFragment;
 import pl.piotrb.weatherapp.fragment.WeatherDataFragment;
+import pl.piotrb.weatherapp.model.DailyWeatherDataContext;
 import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
 import pl.piotrb.weatherapp.repository.WeatherDataRepository;
 import pl.piotrb.weatherapp.style.ZoomOutPageTransformer;
@@ -30,8 +31,12 @@ public class MainActivity extends AppCompatActivity implements
         OnWeatherDataChange,
         OnWeatherDataError,
         OnWeeklyForecastError {
-
+    private float left_x = 0;
+    private float right_x = 0;
+    private float left_y = 0;
+    private float right_y = 0;
     private static final int NUM_PAGES = 7;
+    private static final int MIN_SWIPE_DISTANCE = 150;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private WeatherDataRepository repository;
     private WeatherDataViewModel viewModel;
@@ -40,14 +45,32 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
-            fragmentManager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.first_fragment, ConfigurationFragment.class, null)
-                    .commit();
-            return true;
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                left_x = event.getX();
+                left_y = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                right_x = event.getX();
+                right_y = event.getY();
+                float deltaX = left_x - right_x;
+                float deltaY = left_y - right_y;
+                if (Math.abs(deltaX) > MIN_SWIPE_DISTANCE)
+                {
+                    fragmentManager.beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.first_fragment, ConfigurationFragment.class, null)
+                            .commit();
+                }
+                if (Math.abs(deltaY) > MIN_SWIPE_DISTANCE) {
+                    Toast.makeText(this, "Odświeżanie danych", Toast.LENGTH_LONG).show();
+                    DailyWeatherDataContext context = viewModel.getDailyWeatherContextData().getValue();
+                    repository.getDailyWeatherData(context, viewModel);
+                }
+                break;
         }
-        return false;
+        return super.onTouchEvent(event);
     }
 
     @Override
