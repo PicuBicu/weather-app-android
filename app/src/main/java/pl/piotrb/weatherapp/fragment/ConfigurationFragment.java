@@ -36,7 +36,7 @@ public class ConfigurationFragment extends Fragment {
     private Spinner spinner;
     private EditText cityNameText;
     private Button acceptButton;
-    private ImageButton likedButton;
+    private Button likedButton;
     private RadioGroup unitRadioGroup;
     private WeatherDataViewModel viewModel;
 

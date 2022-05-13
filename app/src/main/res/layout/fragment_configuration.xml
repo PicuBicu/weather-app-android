@@ -19,25 +19,21 @@
 
         <EditText
             android:id="@+id/edit_city_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:autofillHints=""
-            android:fontFamily="sans-serif-condensed-medium"
             android:inputType="textPostalAddress"
             android:text="@string/start_city_name"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size" />
 
-        <ImageButton
+        <Button
             android:id="@+id/liked_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:contentDescription="@string/star_button_description"
-            android:minWidth="48dp"
-            android:src="@android:drawable/btn_star_big_on" />
+            android:layout_weight="1"
+            android:text="Dodaj do ⭐" />
 
     </LinearLayout>
 
@@ -50,15 +46,6 @@
         android:popupBackground="@drawable/shape"
         android:spinnerMode="dropdown" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:text="Wybierz jednostkę metryczną"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size" />
-
     <RadioGroup
         android:id="@+id/unit_system_group"
         android:layout_width="match_parent"
@@ -70,7 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="sans-serif-condensed"
             android:text="@string/system_metryczny"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size" />
@@ -80,7 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="sans-serif-condensed"
             android:text="@string/system_imperialny"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size" />
@@ -91,8 +76,7 @@
         android:id="@+id/accept_config_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:text="Akceptuj konfiguracje"
+        android:text="@string/accept_config"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size" />
 

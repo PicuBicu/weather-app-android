@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,7 +67,9 @@ public class MainActivity extends AppCompatActivity implements
                 if (Math.abs(deltaY) > MIN_SWIPE_DISTANCE) {
                     Toast.makeText(this, "Odświeżanie danych", Toast.LENGTH_LONG).show();
                     DailyWeatherDataContext context = viewModel.getDailyWeatherContextData().getValue();
-                    repository.getDailyWeatherData(context, viewModel);
+                    if (context != null) {
+                        repository.getDailyWeatherData(context, viewModel);
+                    }
                 }
                 break;
         }
@@ -84,9 +85,8 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private boolean isTableScreen() {
-        return getDisplay().getRotation() == Surface.ROTATION_90
-                && getWindowManager().getCurrentWindowMetrics().getBounds().width() > 600;
+    private boolean isTabletScreen() {
+        return getResources().getBoolean(R.bool.isTablet);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements
                 .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
                 .commit();
 
-        if (isTableScreen()) {
+        if (isTabletScreen()) {
             List<Bundle> bundleList = new ArrayList<>(7);
             for (int i = 0; i < 7; i++) {
                 Bundle bundle = new Bundle();
