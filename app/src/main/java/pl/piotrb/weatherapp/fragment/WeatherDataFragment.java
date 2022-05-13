@@ -20,8 +20,6 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
 
-import lombok.val;
-import lombok.var;
 import pl.piotrb.weatherapp.R;
 import pl.piotrb.weatherapp.model.currentweatherdata.WeatherData;
 import pl.piotrb.weatherapp.utils.TemperatureConverter;

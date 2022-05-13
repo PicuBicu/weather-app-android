@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,6 +158,10 @@ public class MainActivity extends AppCompatActivity implements
             Log.i("RETROFIT", "Subscribe to Weather Data");
             val unitValue = viewModel.getDailyWeatherContextData().getValue().getUnit();
             assert unitValue != null;
+            if (isDataOutdated(weatherData.getDt(),
+                    weatherData.getTimezone())) {
+                Toast.makeText(this, "Dane mogą być nieaktualne", Toast.LENGTH_SHORT).show();
+            }
             val forecast = new WeeklyForecastDataContext();
             forecast.setUnits(unitValue);
             forecast.setLatitude(weatherData.getCoord().getLat());
@@ -176,5 +183,18 @@ public class MainActivity extends AppCompatActivity implements
         viewModel.getWeeklyForecastError().observe(this, error -> {
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private boolean isDataOutdated(int epoch, int timezone) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime epochTime = LocalDateTime.ofEpochSecond(
+                epoch,
+                0,
+                ZoneOffset.ofTotalSeconds(timezone));
+        Duration duration = Duration.between(epochTime, currentTime);
+        Log.i("UI", "Current time " + currentTime);
+        Log.i("UI", "Epoch time " + epochTime);
+        Log.i("UI", "duration "+ duration.getSeconds());
+        return duration.getSeconds() > 3600;
     }
 }
