@@ -5,19 +5,23 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.val;
 import pl.piotrb.weatherapp.fragment.AdditionalDataFragment;
 import pl.piotrb.weatherapp.fragment.ConfigurationFragment;
 import pl.piotrb.weatherapp.fragment.WeatherDataFragment;
+import pl.piotrb.weatherapp.fragment.WeeklyForecastSingleFragment;
 import pl.piotrb.weatherapp.model.DailyWeatherDataContext;
 import pl.piotrb.weatherapp.model.WeeklyForecastDataContext;
 import pl.piotrb.weatherapp.repository.WeatherDataRepository;
@@ -31,13 +35,13 @@ public class MainActivity extends AppCompatActivity implements
         OnWeatherDataChange,
         OnWeatherDataError,
         OnWeeklyForecastError {
+    private static final int NUM_PAGES = 7;
+    private static final int MIN_SWIPE_DISTANCE = 150;
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
     private float left_x = 0;
     private float right_x = 0;
     private float left_y = 0;
     private float right_y = 0;
-    private static final int NUM_PAGES = 7;
-    private static final int MIN_SWIPE_DISTANCE = 150;
-    private final FragmentManager fragmentManager = getSupportFragmentManager();
     private WeatherDataRepository repository;
     private WeatherDataViewModel viewModel;
     private ViewPager2 viewPager;
@@ -45,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction())
-        {
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 left_x = event.getX();
                 left_y = event.getY();
@@ -56,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements
                 right_y = event.getY();
                 float deltaX = left_x - right_x;
                 float deltaY = left_y - right_y;
-                if (Math.abs(deltaX) > MIN_SWIPE_DISTANCE)
-                {
+                if (Math.abs(deltaX) > MIN_SWIPE_DISTANCE) {
                     fragmentManager.beginTransaction()
                             .setReorderingAllowed(true)
                             .replace(R.id.first_fragment, ConfigurationFragment.class, null)
@@ -82,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    private boolean isTableScreen() {
+        return getDisplay().getRotation() == Surface.ROTATION_90
+                && getWindowManager().getCurrentWindowMetrics().getBounds().width() > 600;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,16 +105,35 @@ public class MainActivity extends AppCompatActivity implements
         onWeeklyForecastError();
         onWeatherDataError();
 
-        // Adding fragment and view pager
-        viewPager = findViewById(R.id.pager);
-        viewPager.setPageTransformer(new ZoomOutPageTransformer());
-        pagerAdapter = new ScreenSlidePageAdapter(this, NUM_PAGES);
-        viewPager.setAdapter(pagerAdapter);
         fragmentManager.beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.first_fragment, ConfigurationFragment.class, null)
                 .add(R.id.middle_fragment, AdditionalDataFragment.class, null)
                 .commit();
+
+        if (isTableScreen()) {
+            List<Bundle> bundleList = new ArrayList<>(7);
+            for (int i = 0; i < 7; i++) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("weekDay", i);
+                bundleList.add(bundle);
+            }
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, WeeklyForecastSingleFragment.class, bundleList.get(0))
+                    .replace(R.id.fragmentContainerView2, WeeklyForecastSingleFragment.class, bundleList.get(1))
+                    .replace(R.id.fragmentContainerView3, WeeklyForecastSingleFragment.class, bundleList.get(2))
+                    .replace(R.id.fragmentContainerView4, WeeklyForecastSingleFragment.class, bundleList.get(3))
+                    .replace(R.id.fragmentContainerView5, WeeklyForecastSingleFragment.class, bundleList.get(4))
+                    .replace(R.id.fragmentContainerView6, WeeklyForecastSingleFragment.class, bundleList.get(5))
+                    .replace(R.id.fragmentContainerView7, WeeklyForecastSingleFragment.class, bundleList.get(6))
+                    .commit();
+        } else {
+            Log.i("UI", "Setting view pager");
+            viewPager = findViewById(R.id.pager);
+            viewPager.setPageTransformer(new ZoomOutPageTransformer());
+            pagerAdapter = new ScreenSlidePageAdapter(this, NUM_PAGES);
+            viewPager.setAdapter(pagerAdapter);
+        }
     }
 
     // Setting daily weather context will lead to replacing config fragment with weather data fragment

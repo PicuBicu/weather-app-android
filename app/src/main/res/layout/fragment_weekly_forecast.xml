@@ -23,7 +23,7 @@
             android:textSize="@dimen/text_size" />
 
         <ImageView
-            android:id="@+id/wf_image_view"
+            android:id="@+id/wft_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -45,7 +45,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="@string/temperature"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -111,6 +112,7 @@
                         android:layout_weight="1"
                         android:text="@string/speed_unit"
                         android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="@dimen/text_size"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -152,6 +154,7 @@
                         android:layout_weight="1"
                         android:text="@string/degrees_unit"
                         android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="@dimen/text_size"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -193,6 +196,7 @@
                         android:layout_weight="1"
                         android:text="@string/humidity_unit"
                         android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="@dimen/text_size"
                         android:textStyle="bold" />
 
                 </LinearLayout>

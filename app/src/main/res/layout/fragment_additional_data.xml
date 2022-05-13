@@ -51,6 +51,7 @@
                     android:layout_weight="1"
                     android:text="@string/speed_unit"
                     android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="@dimen/text_size"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -92,6 +93,7 @@
                     android:layout_weight="1"
                     android:text="@string/degrees_unit"
                     android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="@dimen/text_size"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -134,6 +136,7 @@
                     android:layout_weight="1"
                     android:text="@string/visibility_unit"
                     android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="@dimen/text_size"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -176,6 +179,7 @@
                     android:layout_weight="1"
                     android:text="@string/humidity_unit"
                     android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="@dimen/text_size"
                     android:textStyle="bold" />
             </LinearLayout>
 

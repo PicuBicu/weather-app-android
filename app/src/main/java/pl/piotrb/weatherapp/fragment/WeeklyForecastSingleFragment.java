@@ -28,11 +28,11 @@ import pl.piotrb.weatherapp.subscriber.OnWeeklyForecastChange;
 import pl.piotrb.weatherapp.utils.TemperatureConverter;
 import pl.piotrb.weatherapp.viewmodel.WeatherDataViewModel;
 
-public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecastChange {
+public class WeeklyForecastSingleFragment extends Fragment implements OnWeeklyForecastChange {
 
     private ImageView imageView;
     private TextView tempTextView;
-    private TextView unitsTextView;
+    private TextView tempUnitTextView;
     private TextView dayNameTextView;
     private TextView humidityTextView;
     private TextView windDirectionTextView;
@@ -41,8 +41,8 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
     private WeatherDataViewModel viewModel;
     private Integer weekDay;
 
-    public static WeeklyForecastFragment newInstance(Integer weekDay) {
-        WeeklyForecastFragment fragment = new WeeklyForecastFragment();
+    public static WeeklyForecastSingleFragment newInstance(int weekDay) {
+        WeeklyForecastSingleFragment fragment = new WeeklyForecastSingleFragment();
         Bundle args = new Bundle();
         args.putInt("weekDay", weekDay);
         Log.i("UI", "Setting new fragment with weekday " + weekDay);
@@ -53,14 +53,14 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_weekly_forecast, container, false);
+        View root = inflater.inflate(R.layout.fragment_weekly_forecast_single, container, false);
         imageView = root.findViewById(R.id.wft_image_view);
-        tempTextView = root.findViewById(R.id.wf_temp_text_view);
-        unitsTextView = root.findViewById(R.id.wf_units_text_view);
-        dayNameTextView = root.findViewById(R.id.wf_day_name_text_view);
-        humidityTextView = root.findViewById(R.id.wf_humiditiy_text_view);
-        windDirectionTextView = root.findViewById(R.id.wf_wind_direction_text_view);
-        windSpeedTextView = root.findViewById(R.id.wf_wind_speed_text_view);
+        tempTextView = root.findViewById(R.id.wft_temp_text_view);
+        tempUnitTextView = root.findViewById(R.id.wft_temp_unit_text_view);
+        dayNameTextView = root.findViewById(R.id.wft_day_name_text_view);
+        humidityTextView = root.findViewById(R.id.wft_humidity_text_view);
+        windDirectionTextView = root.findViewById(R.id.wft_wind_direction_text_view);
+        windSpeedTextView = root.findViewById(R.id.wft_wind_speed_text_view);
         return root;
     }
 
@@ -85,9 +85,9 @@ public class WeeklyForecastFragment extends Fragment implements OnWeeklyForecast
             Double value = daily.getTemp().getDay();
             if (unit.equals("F")) {
                 value = TemperatureConverter.convertFromCelsiusToFahrenheit(value);
-                unitsTextView.setText("F");
+                tempUnitTextView.setText("F");
             } else {
-                unitsTextView.setText("C");
+                tempUnitTextView.setText("C");
             }
             tempTextView.setText(String.format(
                     Locale.getDefault(),

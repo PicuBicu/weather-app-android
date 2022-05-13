@@ -13,7 +13,7 @@
     <string name="star_button_description">Star button used to add city to liked cities</string>
     <string name="speed_unit">m/s</string>
     <string name="temperature">Temperatura</string>
-    <string name="degrees_unit">degrees</string>
+    <string name="degrees_unit">°</string>
     <string name="humidity_unit">%</string>
     <string name="visibility_unit">m</string>
     <string name="global_unit">Jednostka</string>
