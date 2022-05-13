@@ -43,6 +43,7 @@ public class ConfigurationFragment extends Fragment {
     private void addNewCity(String cityName) {
         if (!isCityLiked(cityName)) {
             cities.add(cityName);
+            Toast.makeText(requireActivity(), "Dodawanie miasta " + cityName, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -70,6 +71,7 @@ public class ConfigurationFragment extends Fragment {
         editor.remove(cityName + "_wd");
         editor.remove(cityName + "_wf");
         editor.apply();
+        Toast.makeText(requireActivity(), "Usuwanie miasta " + cityName, Toast.LENGTH_LONG).show();
     }
 
     public void loadCities() {
